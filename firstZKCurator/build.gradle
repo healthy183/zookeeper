@@ -4,7 +4,6 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'idea'
 
-
 sourceCompatibility = 1.7
 
 repositories {
@@ -13,15 +12,41 @@ repositories {
 
 dependencies {
 
-    compile 'org.projectlombok:lombok:1.16.6'
+    compile ('org.projectlombok:lombok:1.16.6'){
+        exclude  group: 'log4j', module: 'log4j'
+    }
 
-    compile 'org.apache.curator:curator-framework:2.9.0'
+    compile('org.apache.zookeeper:zookeeper:3.4.6'){
+       // exclude  group: 'log4j', module: 'log4j'
+        exclude  group: 'org.slf4j', module: '*'
+        exclude  group: 'log4j', module: 'log4j'
+       // exclude group: "junit", module: '*'
+    }
 
-    compile 'org.apache.curator:curator-recipes:2.9.0'
+    compile('org.apache.curator:curator-framework:2.9.0') {
+        exclude group: "org.slf4j", module: '*'
+        exclude group: "org.apache.zookeeper", module: "zookeeper"
+    }
 
-    compile 'org.apache.curator:curator-x-discovery:2.9.0'
+    compile ('org.apache.curator:curator-recipes:2.9.0'){
+        exclude group: "org.apache.curator", module: "curator-framework"
+    }
 
-    compile 'org.apache.curator:curator-test:2.9.0'
+    compile ('org.apache.curator:curator-x-discovery:2.9.0'){
+        exclude group: "org.apache.curator", module: "curator-recipes"
+    }
+
+     compile ('org.apache.curator:curator-test:2.9.0'){
+         exclude group: "org.apache.zookeeper", module: "zookeeper"
+     }
+
+    compile 'org.slf4j:log4j-over-slf4j:1.7.6'
+
+    compile 'org.slf4j:slf4j-api:1.7.6'
+
+    compile 'ch.qos.logback:logback-classic:1.0.13'
+
+
 }
 
 tasks.withType(JavaCompile) {
