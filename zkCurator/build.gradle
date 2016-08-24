@@ -1,0 +1,42 @@
+//子项目通用配置
+subprojects {
+    group 'com.kang.zk.curator'
+    version '1.0-SNAPSHOT'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = 1.8
+    repositories {
+        mavenCentral()
+        //maven{ url 'http://maven.oschina.net/content/groups/public/'}
+    }
+    ext {
+        springVersion = '4.2.3.RELEASE'
+        lombokVersion = '1.16.6'
+        logbackClassicVersion = '1.0.13'
+        slf4jVersion = '1.7.5'
+        curatorVersion='3.1.0'
+    }
+
+    dependencies {
+        testCompile "junit:junit:4.11"
+        compile "org.projectlombok:lombok:$lombokVersion"
+        compile "ch.qos.logback:logback-classic:$logbackClassicVersion"
+        compile "org.slf4j:slf4j-api:$slf4jVersion"
+        compile "org.slf4j:log4j-over-slf4j:$slf4jVersion"
+        compile "org.apache.curator:curator-framework:$curatorVersion"
+        compile "org.apache.curator:curator-recipes:$curatorVersion"
+        compile "org.apache.curator:curator-x-discovery:$curatorVersion"
+        compile "org.apache.curator:curator-test:$curatorVersion"
+    }
+
+
+    configurations {
+        // 所有需要忽略的包定义在此
+        all*.exclude group: 'log4j', module: 'log4j'
+    }
+
+    //指定编译编码
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+}
