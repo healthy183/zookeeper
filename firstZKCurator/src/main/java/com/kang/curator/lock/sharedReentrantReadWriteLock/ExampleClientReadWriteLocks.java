@@ -7,9 +7,11 @@ import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by Healthy on 2015/10/6.
+ *InterProcessReadWriteLock just like ReentrantReadWriteLock
  */
 public class ExampleClientReadWriteLocks {
 

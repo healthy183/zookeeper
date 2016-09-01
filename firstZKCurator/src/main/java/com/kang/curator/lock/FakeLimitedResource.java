@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class FakeLimitedResource {
 
+    //原子变量
     private final AtomicBoolean inUse = new AtomicBoolean(false);//构造参数:initialValue
 
     public void use(){

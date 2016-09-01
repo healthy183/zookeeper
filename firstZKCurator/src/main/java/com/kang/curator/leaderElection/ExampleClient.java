@@ -13,8 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Healthy on 2015/10/6.
  */
-public class ExampleClient  extends LeaderSelectorListenerAdapter
-            implements Closeable{
+public class ExampleClient  extends LeaderSelectorListenerAdapter implements Closeable{
 
     private final String name;
     private final LeaderSelector  leaderSelector;
@@ -36,15 +35,16 @@ public class ExampleClient  extends LeaderSelectorListenerAdapter
         leaderSelector.close();
     }
 
+    /**
+     * will be invoded when get leadeship
+     * @param client
+     * @throws Exception
+     */
     @Override
     public void takeLeadership(CuratorFramework client) throws Exception {
-
         final int waitSeconds =(int)(Math.random()*5)+1;
-
         System.out.println(name + " is  the leader now,wait " + waitSeconds + " seconds!");
-
         System.out.println(name + " had been leader for " + leaderCount.getAndIncrement() + " time(s) before");
-
         try {
             Thread.sleep(TimeUnit.SECONDS.toMillis(waitSeconds));//睡眠超过最大等待时间将失去leadership
         }catch (InterruptedException e){
@@ -53,7 +53,5 @@ public class ExampleClient  extends LeaderSelectorListenerAdapter
         }finally{
             System.out.println(name+" relinquishing leadership.\n");
         }
-
-
     }
 }

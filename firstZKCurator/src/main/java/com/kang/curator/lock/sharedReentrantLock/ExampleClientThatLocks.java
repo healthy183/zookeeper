@@ -5,9 +5,11 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by Healthy on 2015/10/6.
+ * InterProcessMutex like the jdk ReentrantLock
  */
 public class ExampleClientThatLocks {
 
@@ -25,11 +27,9 @@ public class ExampleClientThatLocks {
     }
 
     public void doWork(long time,TimeUnit timeUnit) throws Exception {
-
             if(!lock.acquire(time,timeUnit)){
                 throw new IllegalStateException(clientName+" acquire lock fail!");
             }
-
             try{
                 System.out.println(clientName+" had the lock");
                 resource.use();//access resource exclusively
@@ -37,7 +37,5 @@ public class ExampleClientThatLocks {
                 System.out.println(clientName+" releasing the rock!");
                 lock.release();
             }
-
     }
-
 }

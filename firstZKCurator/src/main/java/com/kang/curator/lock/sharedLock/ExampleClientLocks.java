@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Healthy on 2015/10/6.
+ * InterProcessSemaphoreMutex  non-reentrant lock!
  */
 public class ExampleClientLocks {
 
@@ -33,6 +34,7 @@ public class ExampleClientLocks {
 
         System.out.println(clientName+" had the lock!");
 
+        //InterProcessSemaphoreMutex
         if(!lock.acquire(time,timeUnit)){
             throw new IllegalStateException(clientName+" acquire lock fail!");
         }
