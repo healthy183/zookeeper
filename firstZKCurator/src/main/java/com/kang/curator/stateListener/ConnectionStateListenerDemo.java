@@ -15,14 +15,21 @@ import org.apache.zookeeper.CreateMode;
  */
 public class ConnectionStateListenerDemo {
 
+    public static void main(String[] args) {
+        createClient();
+    }
+
     public static void createClient(){
         String path ="/tom/cat";
+        String regContent = "hello";
         TestingServer testingServer = null;
         try {
             testingServer = new TestingServer();
             CuratorFramework curator = CuratorFrameworkFactory.newClient
                     (testingServer.getConnectString(),5000,3000,new ExponentialBackoffRetry(1000, 3));
-            curator.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(path,"hello".getBytes());
+            curator.getConnectionStateListenable().addListener(new MyConnectionStateListener(path,regContent));
+            curator.start();
+            curator.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(path,regContent.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }

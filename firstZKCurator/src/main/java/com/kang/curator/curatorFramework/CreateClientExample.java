@@ -7,6 +7,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
+import org.apache.curator.framework.api.CuratorEventType;
 import org.apache.curator.framework.api.CuratorListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.test.TestingServer;
@@ -103,6 +104,18 @@ public class CreateClientExample {
     public static void setDataAsyncWithCallback(CuratorFramework client, BackgroundCallback callback, String path, byte[] payload) throws Exception {
         // this is another method of getting notification of an async completion
         client.setData().inBackground(callback).forPath(path, payload);
+    }
+
+    public static void setDataAsyncWithCallback(CuratorFramework client, String path, byte[] payload) throws Exception {
+        // this is another method of getting notification of an async completion
+        client.setData().inBackground(new BackgroundCallback(){
+            @Override
+            public void processResult(CuratorFramework client, CuratorEvent event) throws Exception {
+                if(event.getType()== CuratorEventType.CREATE){
+                    System.out.println("code:"+event.getResultCode()+"path:"+event.getPath());
+                }
+            }
+        } ).forPath(path, payload);
     }
 
     public static void detele(CuratorFramework client,String path) throws Exception {

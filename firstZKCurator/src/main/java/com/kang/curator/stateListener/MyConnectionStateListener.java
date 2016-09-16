@@ -36,7 +36,6 @@ public class MyConnectionStateListener  implements ConnectionStateListener {
                     log.info("throw ex ", Throwables.getStackTraceAsString(ex));
                 }
             }
-
         }
     }
 }

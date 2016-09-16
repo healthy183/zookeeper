@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
 <!-- scan="true" log配置如果有修改则重新读取 default true-->
 <!--scanPeriod="60000"  监控配置是否有修改的时间间隔,默认一分钟-->
 <!--debug="false" 打印logback内部日志，默认false -->
